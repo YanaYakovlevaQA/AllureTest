@@ -10,23 +10,21 @@ import static com.codeborne.selenide.Selenide.open;
 import static org.openqa.selenium.By.linkText;
 
 
-public class SelenideTest {
+public class SelenideTest extends TestBase {
 
     @Test
     public void testIssueSearch() {
         SelenideLogger.addListener("allure", new AllureSelenide());
-        Configuration.browserSize = "1920x1980";
-        Configuration.pageLoadStrategy = "eager";
-        Configuration.timeout = 20000;
 
         open("https://github.com");
 
         $(".search-input-container").click();
-        $("#query-builder-test").sendKeys("OJIbKa07/demoqa_tests_36");
+        $("#query-builder-test").sendKeys("YanaYakovlevaQA/ParameterizedTest");
         $("#query-builder-test").submit();
 
-        $(linkText("OJIbKa07/demoqa_tests_36")).click();
+        $(linkText("YanaYakovlevaQA/ParameterizedTest")).click();
         $("#issues-tab").click();
-        $(withText("#1")).should(Condition.exist);
+        $(withText("#2")).should(Condition.exist);
     }
+
 }
