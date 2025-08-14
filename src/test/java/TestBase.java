@@ -9,6 +9,5 @@ public class TestBase {
         Configuration.browserSize = "1920x1980";
         Configuration.pageLoadStrategy = "eager";
         Configuration.timeout = 20000;
-        Configuration.holdBrowserOpen = true;
     }
 }
