@@ -1,11 +1,14 @@
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.Allure;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.OutputType;
 
 import static com.codeborne.selenide.Selectors.withText;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
+import static io.qameta.allure.Allure.attachment;
 import static io.qameta.allure.Allure.step;
 import static org.openqa.selenium.By.linkText;
 
@@ -34,6 +37,16 @@ public class StepsTest extends TestBase {
         step("Проверка наличия Issue с номером " + ISSUE, () -> {
             $(withText("#" + ISSUE)).should(Condition.exist);
         });
+
+        step("Скриншот", () -> {
+            byte[] screenshot = Selenide.screenshot(OutputType.BYTES);
+            Allure.getLifecycle().addAttachment(
+                    "screenshot",
+                    "image/png",
+                    "png",
+                    screenshot
+            );
+        });
     }
 
     @Test
@@ -46,6 +59,7 @@ public class StepsTest extends TestBase {
         steps.clickOnRepositoryLink(REPOSITORY);
         steps.openIssuesTab();
         steps.shouldSeeIssueWithNumber(ISSUE);
+        steps.takeScreenshot();
 
     }
 }
